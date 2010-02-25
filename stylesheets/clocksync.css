@@ -1,0 +1,5 @@
+/* Put Application specific CSS here. */
+.palm-page-header .title {
+      background: url(../images/icon32.png) no-repeat 20px 10px;
+	  padding-left: 60px;
+}

@@ -1,0 +1,10 @@
+{
+	"id": "de.content754.clocksync",
+	"version": "1.0.0",
+	"vendor": "content754",
+	"type": "web",
+	"main": "index.html",
+	"title": "Clock Sync",
+	"icon": "icon.png",
+	"noWindow": "true"
+}

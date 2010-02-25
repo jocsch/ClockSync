@@ -1,0 +1,37 @@
+<div class="palm-page-header">
+        <div class="palm-page-header-wrapper">
+            <div class="title">ClockSync</div>
+        </div>
+</div>
+<div class="palm-info-text" id="settingsInfo">Syncs the time and date of your device with the standard time fetched from the internet.</div>
+<div class="palm-group">
+    <div class="palm-group-title"><span>Remote Time</span></div>
+        <div class="palm-list">
+                <div class="palm-row" x-mojo-tap-highlight="momentary">
+                        <div class="palm-row-wrapper">
+                                <div id="remote-time" class="title">Retrieving remote time...</div>
+                        </div>
+                </div>
+                <div class="palm-row last" x-mojo-tap-highlight="momentary">
+                        <div class="palm-row-wrapper">
+								<div x-mojo-element="Button" id="changeButton"></div>                                
+                        </div>
+                </div>
+        </div>
+</div>
+<div class="palm-group">
+    <div class="palm-group-title"><span>Periodic Sync</span></div>
+        <div class="palm-list">
+                <div class="palm-row first">
+                        <div class="palm-row-wrapper">
+                                <div id="active" x-mojo-element="ToggleButton"></div>
+                                <div class="title capitalize">Periodic Sync</div>
+                        </div>
+                </div>
+                <div class="palm-row last" x-mojo-tap-highlight="momentary">
+                        <div class="palm-row-wrapper">
+                                <div id="time" x-mojo-element="ListSelector" class="swap-text"></div>
+                        </div>
+                </div>
+         </div>
+</div>
