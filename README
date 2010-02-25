@@ -5,4 +5,4 @@ Clock Sync can sync periodically in the background and prevents that your device
 While its functionality can be compared with a ntp update service, it's not using ntp as there is no official (read for unmodified/unrooted webos devices) way to start a simple ntp update or cron. 
 Instead the application uses the date header from a request to a website that is known to have a synchronized time. 
 
-Feel free to contribute!
+Feel free to contribute!!
