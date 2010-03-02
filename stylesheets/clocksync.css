@@ -3,3 +3,42 @@
       background: url(../images/icon32.png) no-repeat 20px 10px;
 	  padding-left: 60px;
 }
+
+.drift, .rTime, .lTime {
+	font-size: 15px;
+	color: #666;
+	margin-left: 20px;	
+}
+
+.drift {
+	border-top: 1px solid #666;
+	padding-bottom: 5px;
+}
+
+.h-label {
+	width: 130px;
+	display: inline-block;
+}
+
+.day-header {
+	background-color: #666;
+	color: #fff;
+	font-size: 15px;
+	padding: 0 5px;
+}
+
+#overall-drift {
+	font-weight: bold;
+}
+
+#temp-drift {
+	color: #666;
+	font-size: 16px;
+	font-style: italic;
+}
+
+
+#row-header-monitor, #monitor {
+	padding-bottom: 0;
+	margin-bottom: 0;
+}

@@ -6,5 +6,13 @@
         "source": "app/assistants/main-assistant.js"
     },
     {"source": "app/models/backend.js"},
-    {"source": "app/models/storage.js"}
+    {"source": "app/models/storage.js"},
+    {
+        "scenes": "history",
+        "source": "app/assistants/history-assistant.js"
+    },
+    {
+        "scenes": "preferences",
+        "source": "app/assistants/preferences-assistant.js"
+    }
 ]

@@ -18,9 +18,8 @@ AppAssistant = Class.create({
 			Mojo.Log.info("Headless: ", launchParams.action);
 			try {
 				this.backend.useRemoteTime(function() {
-					this.storage.setLastSync(new Date().getTime());
-					Mojo.Log.error("Successfull sync");
-					Mojo.Controller.getAppController().showBanner({messageText: "Clock sync was successfull", icon: "icon.png"}, {source: "notification"});
+					Mojo.Log.info("Successfull sync");
+					Mojo.Controller.getAppController().showBanner({messageText: (this.storage.isMonitor()?"Clock monitored":"Clock sync was successfull"), icon: "icon.png"}, {source: "notification"});
 				}.bind(this));
 			} catch(err) {
 				Mojo.Log.error("Something unplanned has happened: ", err);
@@ -31,6 +30,8 @@ AppAssistant = Class.create({
 		}
 		
 		var stageController = this.controller.getStageController("main");
+		
+		
 		if (stageController) {
 			stageController.activate();
 		} else {
@@ -45,6 +46,19 @@ AppAssistant = Class.create({
 		if (!this.storage.getTimerHandledInSession()) {
 			this.backend.handlePeriodicSync();
 		}
-	}
+	},
+	handleCommand : function(event) {
+		this.controller = Mojo.Controller.getAppController().getActiveStageController("card");//getStageController("main");
+	    	if(event.type == Mojo.Event.command) {
+	    		switch(event.command) {
+		   	 	 	case 'do-history':
+		   	 	 		this.controller.pushScene("history", this.backend, this.storage);
+			    	 	break;
+		   	 	 	case 'do-preferences':
+		   	 	 		this.controller.pushScene("preferences", this.backend, this.storage);
+		   	 	 		break;
+		    	} 
+	   	   }
+	} 
 	
 });

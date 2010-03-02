@@ -1,6 +1,6 @@
 <div class="palm-page-header">
         <div class="palm-page-header-wrapper">
-            <div class="title">ClockSync</div>
+            <div class="title">Clock Sync</div>
         </div>
 </div>
 <div class="palm-info-text" id="settingsInfo">Syncs the time and date of your device with the standard time fetched from the internet.</div>
@@ -20,18 +20,34 @@
         </div>
 </div>
 <div class="palm-group">
-    <div class="palm-group-title"><span>Periodic Sync</span></div>
+    <div class="palm-group-title"><span id="group-header-sync">Periodic Sync</span></div>
         <div class="palm-list">
                 <div class="palm-row first">
                         <div class="palm-row-wrapper">
-                                <div id="active" x-mojo-element="ToggleButton"></div>
-                                <div class="title capitalize">Periodic Sync</div>
+                              <div class="palm-info-text" style="margin-top: 3px; margin-bottom: 3px; padding-top: 0">
+									With WebOs 1.4 all timing issues should be solved natively. You probably don't need
+									the periodic sync any longer. If you want to check how accurate your device is keeping time, 
+									use "Periodic Sync" together with "Monitor Mode". 
+								</div>
+							    <div id="active" x-mojo-element="ToggleButton"></div>
+                                <div class="title capitalize" id="row-header-sync">Periodic Sync</div>
+								
                         </div>
                 </div>
-                <div class="palm-row last" x-mojo-tap-highlight="momentary">
+                <div class="palm-row" x-mojo-tap-highlight="momentary">
                         <div class="palm-row-wrapper">
                                 <div id="time" x-mojo-element="ListSelector" class="swap-text"></div>
                         </div>
                 </div>
+			    <div class="palm-row last">
+                        <div class="palm-row-wrapper">
+                                <div id="monitor" x-mojo-element="ToggleButton"></div>
+                                <div class="title capitalize" id="row-header-monitor">Monitor mode</div>
+								<div class="palm-info-text monitor-text"> 
+								In monitoring mode Clock Sync does NOT sync your device periodically. Instead it just monitors the time and drift
+	and reports them to the history.</div>
+                        </div>
+                </div>
+              
          </div>
 </div>
