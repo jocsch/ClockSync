@@ -17,11 +17,11 @@ var Backend = Class.create({
 		}
 		var myAjax = new Ajax.Request("", {
 			method: "get",
-			requestHeaders: {
-			"USER_AGENT": navigator.userAgent
-		},
-		onSuccess: parseDate,
-		onFailure: onFailure
+			/*requestHeaders: {
+				"USER_AGENT": navigator.userAgent
+			},*/
+			onSuccess: parseDate,
+			onFailure: onFailure
 		});
 	},
 	getRemoteTimeWithDrift: function(onComplete, onFailure) {
@@ -97,8 +97,8 @@ var Backend = Class.create({
 		//{ "day": "Friday, 1th March", "localTime" : "15:00:12", "remoteTime": "15:01:12", "drift":
 	},
 	handlePeriodicSync: function() {
-		if (this.storage.isActive()) {
-			this.startTimer(this.storage.getPeriod());
+		if (this.storage.isActive() || this.storage.getFixedTimes().length > 0) {
+			this.startTimer(this.storage.isActive()?this.storage.getPeriod():null, this.storage.getFixedTimes());
 		} else  {
 			this.stopTimer();
 		}
@@ -116,20 +116,89 @@ var Backend = Class.create({
 			onFailure: callback
 		});
 	},
-	startTimer: function(period) {
-		Mojo.Log.error("timer start ", period);
+	startTimer: function(period, fixedTimes) {
+		Mojo.Log.info("timer start ", period, fixedTimes);
+		var nextTime = this.getNextAbsoluteTime(new Date(), period, fixedTimes);
+		var formatted = this.formatTimerDateString(nextTime);
+		Mojo.Log.info("next timestamp", nextTime, "formatted: ", formatted);
 		var timeout = new Mojo.Service.Request("palm://com.palm.power/timeout", {
 			method: "set",
 			parameters: {
 				"key" : Mojo.appName + ".sync",
-				"in": period,
+				"at": formatted,
 				"wakeup": true,
 				"uri": "palm://com.palm.applicationManager/launch",
 				"params": {
 					"id": Mojo.appName,
 					"params": {"action": "sync"}
 				}
+			},
+			onSuccess: function(suc) {Mojo.Log.info("Success", suc);},
+			onFailure: function(err) {Mojo.Log.error("Error", err);}
+		});
+	},
+	formatTimerDateString: function(date) {
+		var zerofy = function(val) {
+			var ret = val+"";
+			if (ret.length == 1) {
+				return "0"+ret;
 			}
+			return ret;
+		};
+		return          zerofy(date.getUTCMonth()+1)
+				  + "/"+zerofy(date.getUTCDate())
+				  + "/"+date.getUTCFullYear()
+				  + " "+zerofy(date.getUTCHours())
+				  + ":"+zerofy(date.getUTCMinutes())
+				  + ":"+zerofy(date.getUTCSeconds());
+	},
+	getNextAbsoluteTime: function(curDate, period, fixedTimes) {
+		var mixedTimes = fixedTimes.clone();
+		//reset the seconds
+		curDate.setSeconds(0);
+		//period is stored in 00:05:00 format. We need to calculate the next fixed date and retrieve 
+		//the minutes and hours from it to push them to the array for sorting
+		if (period) {
+			var comps = period.split(":");
+			var ms = comps[0]*60*60*1000 + comps[1]*60*1000 + comps[2]*1000;
+			var periodDate = new Date(curDate.getTime() + ms);
+			mixedTimes.push({time: {hour: periodDate.getHours(), min: periodDate.getMinutes()}});
+		}
+		var curDateObj = {time: {hour: curDate.getHours(), min: curDate.getMinutes()}};
+		curDateObj.equals = function(obj) {
+			return this.time.hour == obj.time.hour && 
+				   this.time.min  == obj.time.min;
+		};
+		mixedTimes.push(curDateObj);
+		this.sortFixedTimes(mixedTimes);
+		var nextDate = null;
+		//find the current time and get the following time as the one to choose.
+		//if there is no following time, get the first one but increase the day.
+		var idx = mixedTimes.indexOf(curDateObj);
+		//if the entries following curDateObj have the same timestamp, skip them
+		while (idx < mixedTimes.length-1 && curDateObj.equals(mixedTimes[idx+1])) {
+			idx++;
+		}
+		
+		if (idx == mixedTimes.length-1) {
+			//set ahead a day as there is nothing left for today
+			nextDate = new Date(curDate.getTime() + 24*60*60*1000);
+			nextDate.setHours(mixedTimes[0].time.hour);
+			nextDate.setMinutes(mixedTimes[0].time.min);
+		} else {
+			nextDate = new Date(curDate.getTime());
+			nextDate.setHours(mixedTimes[idx + 1].time.hour);
+			nextDate.setMinutes(mixedTimes[idx + 1].time.min);
+		}
+		return nextDate;
+	},
+	//earliest time is first, latest is last
+	sortFixedTimes: function(times) {
+		times.sort(function(a,b) {
+			if (a.time.hour == b.time.hour) {
+				return a.time.min - b.time.min;
+			}
+			return a.time.hour - b.time.hour;
 		});
 	},
     formatDriftSec: function(secs) {

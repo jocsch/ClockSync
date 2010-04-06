@@ -1,53 +1,97 @@
 <div class="palm-page-header">
-        <div class="palm-page-header-wrapper">
-            <div class="title">Clock Sync</div>
+    <div class="palm-page-header-wrapper">
+        <div class="title">
+            Clock Sync
         </div>
+    </div>
 </div>
-<div class="palm-info-text" id="settingsInfo">Syncs the time and date of your device with the standard time fetched from the internet.</div>
-<div class="palm-group">
-    <div class="palm-group-title"><span>Remote Time</span></div>
-        <div class="palm-list">
-                <div class="palm-row" x-mojo-tap-highlight="momentary">
-                        <div class="palm-row-wrapper">
-                                <div id="remote-time" class="title">Retrieving remote time...</div>
-                        </div>
-                </div>
-                <div class="palm-row last" x-mojo-tap-highlight="momentary">
-                        <div class="palm-row-wrapper">
-								<div x-mojo-element="Button" id="changeButton"></div>                                
-                        </div>
-                </div>
-        </div>
+<div class="palm-info-text" id="settingsInfo">
+    Syncs the time and date of your device with the standard time fetched from the internet.
 </div>
 <div class="palm-group">
-    <div class="palm-group-title"><span id="group-header-sync">Periodic Sync</span></div>
-        <div class="palm-list">
-                <div class="palm-row first">
-                        <div class="palm-row-wrapper">
-                              <div class="palm-info-text" style="margin-top: 3px; margin-bottom: 3px; padding-top: 0">
-									With WebOs 1.4 all timing issues should be solved natively. You probably don't need
-									the periodic sync any longer. If you want to check how accurate your device is keeping time, 
-									use "Periodic Sync" together with "Monitor Mode". 
-								</div>
-							    <div id="active" x-mojo-element="ToggleButton"></div>
-                                <div class="title capitalize" id="row-header-sync">Periodic Sync</div>
-								
-                        </div>
+    <div class="palm-group-title">
+        <span>Remote Time</span>
+    </div>
+    <div class="palm-list">
+        <div class="palm-row" x-mojo-tap-highlight="momentary">
+            <div class="palm-row-wrapper">
+                <div id="remote-time" class="title">
+                    Retrieving remote time...
                 </div>
-                <div class="palm-row" x-mojo-tap-highlight="momentary">
-                        <div class="palm-row-wrapper">
-                                <div id="time" x-mojo-element="ListSelector" class="swap-text"></div>
-                        </div>
+            </div>
+        </div>
+        <div class="palm-row last" x-mojo-tap-highlight="momentary">
+            <div class="palm-row-wrapper">
+                <div x-mojo-element="Button" id="changeButton">
                 </div>
-			    <div class="palm-row last">
-                        <div class="palm-row-wrapper">
-                                <div id="monitor" x-mojo-element="ToggleButton"></div>
-                                <div class="title capitalize" id="row-header-monitor">Monitor mode</div>
-								<div class="palm-info-text monitor-text"> 
-								In monitoring mode Clock Sync does NOT sync your device periodically. Instead it just monitors the time and drift
-	and reports them to the history.</div>
-                        </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="palm-group">
+    <div class="palm-group-title">
+        <span id="group-header-sync">Periodic Sync</span>
+    </div>
+    <div class="palm-list">
+        <div class="palm-row first">
+            <div class="palm-row-wrapper">
+                <div class="palm-info-text" style="margin-top: 3px; margin-bottom: 3px; padding-top: 0">
+                    If you only want to check how accurate your device is keeping time (without actually syncing), 
+                    use "Periodic Sync" together with "Monitor Mode". 
                 </div>
-              
-         </div>
+                <div id="active" x-mojo-element="ToggleButton">
+                </div>
+                <div class="title capitalize" id="row-header-sync">
+                    Periodic Sync
+                </div>
+            </div>
+        </div>
+        <div class="palm-row last" x-mojo-tap-highlight="momentary">
+            <div class="palm-row-wrapper">
+                <div id="time" x-mojo-element="ListSelector" class="swap-text">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="palm-group">
+    <div class="palm-group-title">
+        <span id="group-header-fixed">@Time Sync</span>
+    </div>
+	   <div class="palm-list">
+        <div class="palm-row first">
+          <div class="palm-row-wrapper">
+	    	<div class="palm-info-text" style="margin-top: 3px; margin-bottom: 3px; padding-top: 0">
+              You can schedule Clock Sync to sync at fixed times during a day. This feature can be 
+			  used alone or mixed with "Periodic Sync". It also obeys the "Monitor Mode". 
+            </div>
+			
+		  </div>
+		</div>
+		<div class="palm-row">
+			<div x-mojo-element="List" id="fixedTimes">   </div>
+		</div>
+	  </div>
+	
+</div>
+<div class="palm-group">
+    <div class="palm-group-title">
+        <span id="group-header-monitor">Monitor mode</span>
+    </div>
+    <div class="palm-list">
+        <div class="palm-row">
+            <div class="palm-row-wrapper">
+                <div class="palm-info-text" style="margin-top: 3px; margin-bottom: 3px; padding-top: 0">
+                    In monitoring mode Clock Sync does NOT sync your device for real when triggered by the periodic sync or the fixed times. 
+					Instead it just monitors the time and drift and reports them to the history.
+                </div>
+
+				<div id="monitor" x-mojo-element="ToggleButton">
+                </div>
+                <div class="title capitalize" id="row-header-monitor">
+                    Monitor mode
+                </div>
+                            </div>
+        </div>
+    </div>
 </div>

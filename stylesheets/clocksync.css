@@ -37,8 +37,12 @@
 	font-style: italic;
 }
 
-
+/*
 #row-header-monitor, #monitor {
 	padding-bottom: 0;
 	margin-bottom: 0;
+}*/
+
+.fixedTimesText {
+	padding-left: 15px;
 }
